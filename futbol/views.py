@@ -4,6 +4,9 @@ from django import forms
 
 from .models import *
 
+def index(request):
+    return render(request, "index.html")
+    
 class MenuForm(forms.Form):
     lliga = forms.ModelChoiceField(queryset=Lliga.objects.all())
     #nom = forms.CharField()
