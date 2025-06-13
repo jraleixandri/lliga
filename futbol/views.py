@@ -4,7 +4,6 @@ from django import forms
 
 from .models import *
 
-
 class MenuForm(forms.Form):
     lliga = forms.ModelChoiceField(queryset=Lliga.objects.all())
     #nom = forms.CharField()
@@ -14,24 +13,24 @@ class MenuForm(forms.Form):
 
 def classificacio_menu(request):
     queryset = Lliga.objects.all()
-    form = MenuForm()
-    return render(request,"classificacio_menu.html",
-    		{"lligues":queryset,"form":form})
+    #form = MenuForm()
+    #return render(request,"classificacio_menu.html",
+    #		{"lligues":queryset,"form":form})
 
     # si hi ha dades, les processem
-    #if request.method == "POST":
-    #    form = MenuForm(request.POST)
-    #    if form.is_valid():
-    #        lliga = form.cleaned_data.get("lliga")
+    if request.method == "POST":
+        form = MenuForm(request.POST)
+        if form.is_valid():
+            lliga = form.cleaned_data.get("lliga")
             # cridem a /classificacio/<lliga_id>
-    #        return redirect('classificacio',lliga.id)
+            return redirect('classificacio',lliga.id)
 
     # renderitzem formulari
-    #form = MenuForm()
-    #return render(request, "classificacio_menu.html",{
-    #                "lligues":queryset, # per renderitzar menú de links
-    #                "form":form,        # per renderitzar form desplegable
-    #        })
+    form = MenuForm()
+    return render(request, "classificacio_menu.html",{
+                    "lligues":queryset, # per renderitzar menú de links
+                    "form":form,        # per renderitzar form desplegable
+            })
 
 
 
